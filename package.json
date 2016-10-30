@@ -1,8 +1,8 @@
 {
   "name": "vue-echo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue integration for the Laravel Echo library.",
-  "main": "vue-echo.js",
+  "main": "dist/build.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/happyDemon/vue-echo"
@@ -18,8 +18,19 @@
   },
   "license": "MIT",
   "homepage": "https://github.com/happyDemon/vue-echo",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
   "dependencies": {
     "laravel-echo": "^1.0.5",
     "pusher-js": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "cross-env": "^3.1.3",
+    "webpack": "^1.13.3"
   }
 }
