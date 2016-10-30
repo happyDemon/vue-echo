@@ -36,6 +36,16 @@ Vue.use(VueEcho, {
 ### Using Echo
 Once vue-echo is registered, every vue instance is able to to subscribe to channels and listen to events through the `this.$echo` property on the connection you specified earlier.
 
+```js
+var vm = new Vue({
+    created() {
+        // Listen for the 'NewBlogPost' event in the 'team.2' private channel
+        this.$echo.private('team.1').listen('NewBlogPost', function(payload){
+            console.log(payload);
+        });
+    }
+  })
+```
 
 ### Subscribe your Vue instance to a single channel
 You can subscribe a vue instance to a single standard channel if needed and define your events.
