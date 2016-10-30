@@ -1,0 +1,25 @@
+{
+  "name": "vue-echo",
+  "version": "0.1.0",
+  "description": "Vue integration for the Laravel Echo library.",
+  "main": "vue-echo.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/happyDemon/vue-echo"
+  },
+  "keywords": [
+    "laravel",
+    "pusher",
+    "socket.io",
+    "vue"
+  ],
+  "author": {
+    "name": "Maxim Kerstens"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/happyDemon/vue-echo",
+  "dependencies": {
+    "laravel-echo": "^1.0.5",
+    "pusher-js": "^3.2.1"
+  }
+}
