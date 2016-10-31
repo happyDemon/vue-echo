@@ -40,7 +40,7 @@ Once vue-echo is registered, every vue instance is able to to subscribe to chann
 var vm = new Vue({
     created() {
         // Listen for the 'NewBlogPost' event in the 'team.2' private channel
-        this.$echo.private('team.1').listen('NewBlogPost', function(payload){
+        this.$echo.private('team.1').listen('NewBlogPost', (payload) => {
             console.log(payload);
         });
     }
@@ -98,6 +98,32 @@ var vm = new Vue({
       'NewMessage': payload => {
         console.log('bNew message from team', payload);
       }
+    }
+  })
+```
+
+### Manually listening to events
+
+If there's a scenario where you want to listen to events after certain conditions are met, you can do so through `this.channel`:
+
+```js
+var vm = new Vue({
+    channel: 'private:team.1'
+    echo: {
+      'BlogPostCreated': payload => {
+        console.log('blog post created', payload);
+      },
+      'BlogPostDeleted': payload => {
+        console.log('blog post deleted', payload);
+      }
+    },
+    created(){
+        if(window.user.role == 'admin')
+        {
+            this.channel.listen('BlogPostEdited', (payload) => {
+                console.log('As admin I get notified of edits', payload);
+            });
+        }
     }
   })
 ```

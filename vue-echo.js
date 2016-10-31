@@ -16,7 +16,6 @@ export default {
         }
         else
         {
-
             Vue.prototype.$echo = new Echo(options);
         }
 
@@ -50,7 +49,7 @@ export default {
                 }
             },
             beforeDestroy(){
-                if(this.channel !== false){
+                if(this.$options['channel']){
                     this.channel.unsubscribe();
                 }
             }
