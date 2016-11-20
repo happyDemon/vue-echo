@@ -41,7 +41,7 @@ Once vue-echo is registered, every vue instance is able to to subscribe to chann
 ```js
 var vm = new Vue({
     created() {
-        // Listen for the 'NewBlogPost' event in the 'team.2' private channel
+        // Listen for the 'NewBlogPost' event in the 'team.1' private channel
         this.$echo.private('team.1').listen('NewBlogPost', (payload) => {
             console.log(payload);
         });
@@ -98,7 +98,7 @@ var vm = new Vue({
     channel: 'presence:team.1.chat'
     echo: {
       'NewMessage': payload => {
-        console.log('bNew message from team', payload);
+        console.log('new message from team', payload);
       }
     }
   })
