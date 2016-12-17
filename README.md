@@ -1,7 +1,7 @@
 # vue-echo
 Vue integration for the Laravel Echo library.
 
-This Vue plugin injects a Laravel Echo instance into all of you vue instances, allowing for a simple channel subscription on each instance, or using Laravel Echo through `this.$echo`.
+This Vue plugin injects a Laravel Echo instance into all of your vue instances, allowing for a simple channel subscription on each instance, or using Laravel Echo through `this.$echo`.
 
 ## Install
 
@@ -11,8 +11,8 @@ npm install vue-echo --save
   
 ## Usage
 
-### Initialise
-First you'll need to register the plugin and optionally initialise the Echo instance.
+### Initialize
+First you'll need to register the plugin and, optionally, initialize the Echo instance.
 
 ``` js
 import VueEcho from 'vue-echo';
@@ -36,7 +36,7 @@ Vue.use(VueEcho, {
   ```
 
 ### Using Echo
-Once vue-echo is registered, every vue instance is able to to subscribe to channels and listen to events through the `this.$echo` property on the connection you specified earlier.
+Once vue-echo is registered, every vue instance is able to subscribe to channels and listen to events through the `this.$echo` property on the connection you specified earlier.
 
 ```js
 var vm = new Vue({
@@ -68,12 +68,12 @@ var vm = new Vue({
 
 #### Subscribing to channels
 
-Laravel echo allows you to subscribe to; normal, private and presence channels.
+Laravel Echo allows you to subscribe to: normal, private and presence channels.
 
-In the example above we subscribed to a standard channel.
+In the example above, we subscribed to a standard channel.
 
 ##### Private channel
-If you would like to subscribe to private channel instead, prefix your channel name with `private:`
+If you would like to subscribe to a private channel instead, prefix your channel name with `private:`
 
 ```js
 var vm = new Vue({
