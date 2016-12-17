@@ -27,7 +27,7 @@ Vue.use(VueEcho, {
  * ********************************************
  * import Echo from 'laravel-echo';
  * 
- * let EchoInstance = new Echo({
+ * const EchoInstance = new Echo({
  *     broadcaster: 'pusher',  
  *     key: 'PUSHER KEY',
  * });
@@ -40,7 +40,7 @@ Once vue-echo is registered, every vue instance is able to to subscribe to chann
 
 ```js
 var vm = new Vue({
-    created() {
+    mounted() {
         // Listen for the 'NewBlogPost' event in the 'team.1' private channel
         this.$echo.private('team.1').listen('NewBlogPost', (payload) => {
             console.log(payload);
@@ -73,7 +73,7 @@ Laravel echo allows you to subscribe to; normal, private and presence channels.
 In the example above we subscribed to a standard channel.
 
 ##### Private channel
-If you would like to subscribe to private channel instead, prefix your channel name with `private`:
+If you would like to subscribe to private channel instead, prefix your channel name with `private:`
 
 ```js
 var vm = new Vue({
@@ -91,7 +91,7 @@ var vm = new Vue({
 
 ##### Presence channel
 
-If you would like to subscribe to presence channel instead, prefix your channel name with `presence`:
+If you would like to subscribe to presence channel instead, prefix your channel name with `presence:`
 
 ```js
 var vm = new Vue({
@@ -119,7 +119,7 @@ var vm = new Vue({
         console.log('blog post deleted', payload);
       }
     },
-    created(){
+    mounted(){
         if(window.user.role == 'admin')
         {
             this.channel.listen('BlogPostEdited', (payload) => {
