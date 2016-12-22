@@ -19,7 +19,7 @@ import VueEcho from 'vue-echo';
   
 Vue.use(VueEcho, {
     broadcaster: 'pusher',
-    key: 'PUSHER KEY',
+    key: 'PUSHER KEY'
 });
 
 /**
@@ -29,11 +29,11 @@ Vue.use(VueEcho, {
  * 
  * const EchoInstance = new Echo({
  *     broadcaster: 'pusher',  
- *     key: 'PUSHER KEY',
+ *     key: 'PUSHER KEY'
  * });
  * Vue.use(VueEcho, EchoInstance);
  */
-  ```
+```
 
 ### Using Echo
 Once vue-echo is registered, every vue instance is able to subscribe to channels and listen to events through the `this.$echo` property on the connection you specified earlier.
@@ -46,7 +46,7 @@ var vm = new Vue({
             console.log(payload);
         });
     }
-  })
+});
 ```
 
 ### Subscribe your Vue instance to a single channel
@@ -54,16 +54,16 @@ You can subscribe a vue instance to a single standard channel if needed and defi
 
 ```js
 var vm = new Vue({
-    channel: 'blog'
+    channel: 'blog',
     echo: {
-      'BlogPostCreated': payload => {
-        console.log('blog post created', payload);
-      },
-      'BlogPostDeleted': payload => {
-        console.log('blog post deleted', payload);
-      }
+        'BlogPostCreated': payload => {
+            console.log('blog post created', payload);
+        },
+        'BlogPostDeleted': payload => {
+            console.log('blog post deleted', payload);
+        }
     }
-  })
+});
 ```
 
 #### Subscribing to channels
@@ -77,16 +77,16 @@ If you would like to subscribe to a private channel instead, prefix your channel
 
 ```js
 var vm = new Vue({
-    channel: 'private:team.1'
+    channel: 'private:team.1',
     echo: {
-      'BlogPostCreated': payload => {
-        console.log('blog post created', payload);
-      },
-      'BlogPostDeleted': payload => {
-        console.log('blog post deleted', payload);
-      }
+        'BlogPostCreated': payload => {
+            console.log('blog post created', payload);
+        },
+        'BlogPostDeleted': payload => {
+            console.log('blog post deleted', payload);
+        }
     }
-  })
+});
 ```
 
 ##### Presence channel
@@ -95,13 +95,13 @@ If you would like to subscribe to presence channel instead, prefix your channel 
 
 ```js
 var vm = new Vue({
-    channel: 'presence:team.1.chat'
+    channel: 'presence:team.1.chat',
     echo: {
-      'NewMessage': payload => {
-        console.log('new message from team', payload);
-      }
+        'NewMessage': payload => {
+            console.log('new message from team', payload);
+        }
     }
-  })
+});
 ```
 
 ### Manually listening to events
@@ -110,22 +110,21 @@ If there's a scenario where you want to listen to events after certain condition
 
 ```js
 var vm = new Vue({
-    channel: 'private:team.1'
+    channel: 'private:team.1',
     echo: {
-      'BlogPostCreated': payload => {
-        console.log('blog post created', payload);
-      },
-      'BlogPostDeleted': payload => {
-        console.log('blog post deleted', payload);
-      }
+        'BlogPostCreated': payload => {
+            console.log('blog post created', payload);
+        },
+        'BlogPostDeleted': payload => {
+            console.log('blog post deleted', payload);
+        }
     },
     mounted(){
-        if(window.user.role == 'admin')
-        {
+        if(window.user.role == 'admin'){
             this.channel.listen('BlogPostEdited', (payload) => {
                 console.log('As admin I get notified of edits', payload);
             });
         }
     }
-  })
+});
 ```
