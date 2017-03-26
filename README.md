@@ -56,15 +56,17 @@ You can subscribe a vue instance to a single standard channel if needed and defi
 var vm = new Vue({
     channel: 'blog',
     echo: {
-        'BlogPostCreated': payload => {
+        'BlogPostCreated': (payload, vm) => {
             console.log('blog post created', payload);
         },
-        'BlogPostDeleted': payload => {
+        'BlogPostDeleted': (payload, vm) => {
             console.log('blog post deleted', payload);
         }
     }
 });
 ```
+
+Since the scope of `this` would be the same as the scope where you declare your Vue instance a second parameter is added to these locally registered events. This parameter is a direct reference to your Vue instance, you can make any changes you need through there.
 
 #### Subscribing to channels
 
@@ -79,10 +81,10 @@ If you would like to subscribe to a private channel instead, prefix your channel
 var vm = new Vue({
     channel: 'private:team.1',
     echo: {
-        'BlogPostCreated': payload => {
+        'BlogPostCreated': (payload, vm) => {
             console.log('blog post created', payload);
         },
-        'BlogPostDeleted': payload => {
+        'BlogPostDeleted': (payload, vm) => {
             console.log('blog post deleted', payload);
         }
     }
@@ -97,7 +99,7 @@ If you would like to subscribe to presence channel instead, prefix your channel 
 var vm = new Vue({
     channel: 'presence:team.1.chat',
     echo: {
-        'NewMessage': payload => {
+        'NewMessage': (payload, vm) => {
             console.log('new message from team', payload);
         }
     }
@@ -112,10 +114,10 @@ If there's a scenario where you want to listen to events after certain condition
 var vm = new Vue({
     channel: 'private:team.1',
     echo: {
-        'BlogPostCreated': payload => {
+        'BlogPostCreated': (payload, vm) => {
             console.log('blog post created', payload);
         },
-        'BlogPostDeleted': payload => {
+        'BlogPostDeleted': (payload, vm) => {
             console.log('blog post deleted', payload);
         }
     },
