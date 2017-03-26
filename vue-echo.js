@@ -10,7 +10,7 @@ export default {
             throw new Error("[Vue-Echo] cannot initiate options");
         }
 
-        if(typeof options == 'function')
+        if(typeof options.socketId == 'function')
         {
             Vue.prototype.$echo = options;
         }
@@ -28,6 +28,7 @@ export default {
                     if(channel.startsWith('private:'))
                     {
                         this.channel = this.$echo.private(channel.replace('private:', ''))
+                        console.log(this.channel);
                     }
                     else if(channel.startsWith('presence:'))
                     {
@@ -43,7 +44,10 @@ export default {
                     if(events)
                     {
                         Object.keys(events).forEach(function(key){
-                            this.channel.listen(key, events[key]);
+                            // Bind the VM as second parameter
+                            this.channel.listen(key, (payload) => {
+                                events[key](payload, this);
+                            });
                         }, this);
                     }
                 }
