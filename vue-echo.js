@@ -28,7 +28,6 @@ export default {
                     if(channel.startsWith('private:'))
                     {
                         this.channel = this.$echo.private(channel.replace('private:', ''))
-                        console.log(this.channel);
                     }
                     else if(channel.startsWith('presence:'))
                     {
