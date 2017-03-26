@@ -1,6 +1,6 @@
 {
   "name": "vue-echo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vue integration for the Laravel Echo library.",
   "main": "dist/build.js",
   "repository": {
