@@ -20,7 +20,7 @@ export default {
         }
 
         Vue.mixin({
-            created(){
+            mounted() {
                 let channel = this.$options['channel'];
 
                 if(channel)
@@ -46,14 +46,25 @@ export default {
                             // Bind the VM as second parameter
                             this.channel.listen(key, (payload) => {
                                 events[key](payload, this);
-                            });
+                        });
                         }, this);
                     }
                 }
             },
             beforeDestroy(){
-                if(this.$options['channel']){
-                    this.channel.unsubscribe();
+                let channel = this.$options['channel'];
+
+                if(channel){
+                    if(channel.startsWith('private:'))
+                    {
+                        channel = channel.replace('private:', '');
+                    }
+                    else if(channel.startsWith('presence:'))
+                    {
+                        channel = channel.replace('presence:', '');
+                    }
+
+                    this.$echo.leave(channel);
                 }
             }
         })
