@@ -106,6 +106,49 @@ var vm = new Vue({
 });
 ```
 
+### Dynamic channels
+
+You might want to subscribe to a channel that's name is dynamic. For example, a private poker table where the naming convention is: `pokertable.${id}`.
+
+In order to make the name dynamic, we need to change the channel value from a string, to a function that returns a string.
+```JS
+//channel: 'private:pokerTable' <-- old way
+channel(vm) {
+    return 'private:pokerTable'
+},
+```
+
+The channel function has one parameter with the current vue instance. `vm` in the example below.
+This means that if you want to use `this` inside the channel function, you have to use the parameter `vm` instead.
+
+##### Poker table example:
+
+
+```js
+var vm = new Vue({
+    props: {
+        pokerTable: {
+            type: Number
+        }
+    },
+    channel(vm) {
+        return 'private:pokerTable.' + vm.pokerTable,
+    },
+    echo: {
+        'bet': (payload, vm) => {
+            console.log('New bet from', payload);
+        },
+    },
+    mounted(){
+        if(window.user.role == 'admin'){
+            this.channel.listen('BlogPostEdited', (payload) => {
+                console.log('As admin I get notified of edits', payload);
+            });
+        }
+    }
+});
+```
+
 ### Manually listening to events
 
 If there's a scenario where you want to listen to events after certain conditions are met, you can do so through `this.channel`:
