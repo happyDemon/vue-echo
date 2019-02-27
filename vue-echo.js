@@ -22,39 +22,54 @@ export default {
         Vue.mixin({
             mounted() {
                 let channel = this.$options['channel'];
+                const events = this.$options['echo'];
 
-                if(channel)
+                // Exit function if channel is undefined or null.
+                if(channel == undefined)
                 {
-                    if(channel.startsWith('private:'))
-                    {
-                        this.channel = this.$echo.private(channel.replace('private:', ''))
-                    }
-                    else if(channel.startsWith('presence:'))
-                    {
-                        this.channel = this.$echo.join(channel.replace('presence:', ''))
-                    }
-                    else
-                    {
-                        this.channel = this.$echo.channel(channel);
-                    }
-
-                    let events = this.$options['echo'];
-
-                    if(events)
-                    {
-                        Object.keys(events).forEach(function(key){
-                            // Bind the VM as second parameter
-                            this.channel.listen(key, (payload) => {
-                                events[key](payload, this);
-                        });
-                        }, this);
-                    }
+                    return
+                } 
+                
+                // if channel is a function, evaluate the channel by running the provided callback function.
+                if(typeof channel === 'function')
+                {
+                    channel = channel(this)
                 }
-            },
-            beforeDestroy(){
-                let channel = this.$options['channel'];
+                
+                // After we evaluated potential callback, break if provided channel is not a string
+                if(typeof channel !== 'string')
+                {
+                    throw new Error("[Vue-Echo] channel needs to be of type string");
+                }
+                
+                // Join correct channel
+                if(channel.startsWith('private:'))
+                {
+                    this.channel = this.$echo.private(channel.replace('private:', ''))
+                }
+                else if(channel.startsWith('presence:'))
+                {
+                    this.channel = this.$echo.join(channel.replace('presence:', ''))
+                }
+                else
+                {
+                    this.channel = this.$echo.channel(channel);
+                }
 
-                if(channel){
+                
+                // Add user-provided event listeners for the socket
+                if(events)
+                {
+                    Object.keys(events).forEach(key => {
+                        // Bind the VM as second parameter
+                        this.channel.listen(key, (payload) => events[key](payload, this));
+                    }, this);
+                }
+
+                /* Cleanup: Leave the channel on destroyed vue instance.
+                 * - Use an programmatic listener instead of the normal "beforeDestroy". This way, we do not have to do validation of the variable "channel" twice. 
+                 */
+                this.$once('hook:beforeDestroy', () => {
                     if(channel.startsWith('private:'))
                     {
                         channel = channel.replace('private:', '');
@@ -65,7 +80,7 @@ export default {
                     }
 
                     this.$echo.leave(channel);
-                }
+                })
             }
         })
     }
